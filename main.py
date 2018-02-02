@@ -16,15 +16,15 @@ def start_chat(spy_name,spy_age,spy_rating):
             show_menu = False
         else:
             print("Invalid choice!!!")
-
+        #More features to be added
 
 spy_exist = raw_input("Are you an existing user?(Y or N) : ")
 if spy_exist.upper() == 'Y':
     print("We already have your details!")
-    start_chat(spy_name, spy_age, spy_rating)
+    start_chat(spy_name, spy_age, spy_rating)    #Function called
 elif spy_exist.upper() == 'N':
     spy_name = raw_input("What is your spy name? ")
-    if len(spy_name)>=2:    #Validation for spy name
+    if len(spy_name)>=2: #Validation for spy name
         print "Welcome " +spy_name+ ", Glad to meet you!"
         spy_salutation = raw_input("What should we call you (Mr. or Ms.)?" )
         if len(spy_salutation)>0:      #Validation for salutation
@@ -42,9 +42,9 @@ elif spy_exist.upper() == 'N':
                     print("You can always do better")
                 else:
                     print("We can always use somebody to help in the office.")
-                spy_is_online = True
+                spy_is_online = True    #Default value
                 print "Authentication complete! Welcome %s... \nAge: %d and Rating of: %.1f\nProud to have you onboard !\n" %(spy_name,spy_age,spy_rating)
-                start_chat(spy_name,spy_age,spy_rating)
+                start_chat(spy_name,spy_age,spy_rating)        #Function called
             else:
                 print("Sorrry! Age inappropriate to be a spy ")
         else:
