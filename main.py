@@ -3,7 +3,7 @@ print('Welcome to SpyChat')
 print ("Let's get started")
 #Profile of a spy
 spy_name = raw_input("What is your spy name? ")
-if len(spy_name)>=3:    #Validation for spy name
+if len(spy_name)>=2:    #Validation for spy name
     print "Welcome " +spy_name+ ", Glad to meet you!"
     spy_salutation = raw_input("What should we call you (Mr. or Ms.)?" )
     if len(spy_salutation)>0:      #Validation for salutation
