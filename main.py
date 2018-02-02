@@ -1,5 +1,5 @@
 print ("Hello!!!")
-print('Welcome to SpyChat')
+print('******* Welcome to SpyChat *******')
 print ("Let's get started")
 #Profile of a spy
 spy_name = raw_input("What is your spy name? ")
