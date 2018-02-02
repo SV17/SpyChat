@@ -1,12 +1,12 @@
-#importing spy_details
+# importing spy_details
 from spy_details import spy_name,spy_age,spy_rating
 
-#start greeting
+# start greeting
 print ("Hello!!!")
 print('******* << Welcome to SpyChat >> *******')
 print ("Let\'s get started...\n")
 
-#Function declared
+# Function declared
 def start_chat(spy_name,spy_age,spy_rating):
     show_menu = True
     while show_menu:
@@ -18,7 +18,7 @@ def start_chat(spy_name,spy_age,spy_rating):
             show_menu = False
         else:
             print("Invalid choice!!!")
-        #More features to be added
+        # More features to be added
 
 spy_exist = raw_input("Are you an existing user?(Y or N) : ")
 
