@@ -4,13 +4,13 @@ from spy_details import spy_name,spy_age,spy_rating
 # start greeting
 print ("Hello!!!")
 print('******* << Welcome to SpyChat >> *******')
-print ("Let\'s get started...\n")
+print ("""Let\'s get started...""")
 
 # Function declared
 def start_chat(spy_name,spy_age,spy_rating):
     show_menu = True
     while show_menu:
-        menu_choice = input("What do you want to do? \n 1. Add a status update\n 0. Exit\n")
+        menu_choice = input("\nWhat do you want to do? \n 1. Add a status update\n 0. Exit\n")
         if (menu_choice == 1):
             status = raw_input("Your status please: ")
             print status
@@ -61,7 +61,7 @@ elif spy_exist.upper() == 'N':
 
                 # Default Value
                 spy_is_online = True
-                print "Authentication complete! Welcome %s... \nAge: %d and Rating of: %.1f\nProud to have you onboard !\n" %(spy_name,spy_age,spy_rating)
+                print "Authentication complete! Welcome %s... \nAge: %d and Rating of: %.1f\nProud to have you onboard !" %(spy_name,spy_age,spy_rating)
 
                 # Function called to start chat application
                 start_chat(spy_name,spy_age,spy_rating)
