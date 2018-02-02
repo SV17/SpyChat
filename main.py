@@ -13,16 +13,16 @@ if len(spy_name)>=2:    #Validation for spy name
         if spy_age>=12 and spy_age<50:
             print ("Your age is fine to be a spy! ")
             spy_rating = input("Enter your rating: ")
-            if spy_rating>=7.5:
-                print("Excellent spy")
-            elif spy_rating>=5.5 and spy_rating<7.5:
-                print("Good spy")
-            elif spy_rating>=3.5 and spy_rating<5.5:
-                print("Average spy")
+            if spy_rating>4.5:
+                print("Great ace!")
+            elif spy_rating >3.5 and spy_rating <= 4.5:
+                print("You are one of the good ones.")
+            elif spy_rating >= 2.5 and spy_rating <= 3.5:
+                print("You can always do better")
             else:
-                print("Bad spy")
+                print("We can always use somebody to help in the office.")
             spy_is_online = True
-            print "Authentication complete! Welcome " + spy_name + "... \nAge: " + str(spy_age) + " and Rating of: " + str(spy_rating) + " \nProud to have you onboard !"
+            print "Authentication complete! Welcome %s... \nAge: %d and Rating of: %.2f\nProud to have you onboard !" %(spy_name,spy_age,spy_rating)
         else:
             print("Sorrry! Age inappropriate to be a spy ")
     else:
