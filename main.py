@@ -7,36 +7,46 @@ print('******* << Welcome to SpyChat >> *******')
 # Using escape sequence
 print ("Let\'s get started...\n")
 
+# List used for storing old status messages
 STATUS_MESSAGES = ['I\'m busy', 'Available', 'Loving Life!', 'Sleeping']
 
 # Declaring function for adding status
 def add_status(current_status_message):
+    # Checking whether any old status exists
     if current_status_message != None:
         print "Your current status message is: " + current_status_message     # Displays current status message
     else:
+        # When no old status exists
         print"\nYou don't have any status currently!"
 
     # Asking whether we want to select any old status or not
     status = raw_input("\nDo you want to select from old statuses? (Y/N) : ")
     if status.upper() == 'Y':
-        # Displaying old statuses
         serial_number = 1
+        # Displaying old statuses from list
         for old_status in STATUS_MESSAGES:
             print str(serial_number) + ". " + old_status
+            # Incrementing serial number each time to display all statuses
             serial_number = serial_number + 1
+        # Asking the user to select one of the displayed statuses
         user_selection = input("\nWhich one do you want to select? ")
+        # Value selected by user should not exceed list's length
         if len(STATUS_MESSAGES)>=user_selection:
             new_status = STATUS_MESSAGES[user_selection - 1]
         else:
             print("Invalid selection!")
     elif status.upper() == 'N':
         new_status = raw_input("Enter your new status: ")
+        # Checking whether user has entered anything or not
         if len(new_status) > 1:
+            # Appending the new status to the list
             STATUS_MESSAGES.append(new_status)
         else:
+            # When user doesn't enter anything
             print("Please enter something atleast!")
     else:
             print("Invalid entry!")
+    # Returning the value of new status to function
     return new_status
 
 # Declaring function
@@ -50,12 +60,14 @@ def start_chat(spy_name,spy_age,spy_rating):
         menu_choice = input("\nWhat do you want to do? \n 1. Add a status update\n 0. Exit\n")
         if menu_choice == 1:
             updated_status_message = add_status(current_status_message)  # add_status function is called with current status message as parameter
+            # Prints the value returned from add_status function
             print "Your status has been set to: " + updated_status_message
+        # For exitting from menu
         elif menu_choice == 0:
             show_menu = False
         else:
             print("Invalid choice!!!")
-        # More features to be added
+        # More features to be added...
 
 # Asking the spy whether to continue with existing values or create a new user
 spy_exist = raw_input("Are you an existing user?(Y or N) : ")
