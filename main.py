@@ -7,16 +7,50 @@ print('******* << Welcome to SpyChat >> *******')
 # Using escape sequence
 print ("Let\'s get started...\n")
 
+STATUS_MESSAGES = ['I\'m busy', 'Available', 'Loving Life!', 'Sleeping']
+
+# Declaring function for adding status
+def add_status(current_status_message):
+    if current_status_message != None:
+        print "Your current status message is: " + current_status_message     # Displays current status message
+    else:
+        print"\nYou don't have any status currently!"
+
+    # Asking whether we want to select any old status or not
+    status = raw_input("\nDo you want to select from old statuses? (Y/N) : ")
+    if status.upper() == 'Y':
+        # Displaying old statuses
+        serial_number = 1
+        for old_status in STATUS_MESSAGES:
+            print str(serial_number) + ". " + old_status
+            serial_number = serial_number + 1
+        user_selection = input("\nWhich one do you want to select? ")
+        if len(STATUS_MESSAGES)>=user_selection:
+            new_status = STATUS_MESSAGES[user_selection - 1]
+        else:
+            print("Invalid selection!")
+    elif status.upper() == 'N':
+        new_status = raw_input("Enter your new status: ")
+        if len(new_status) > 1:
+            STATUS_MESSAGES.append(new_status)
+        else:
+            print("Please enter something atleast!")
+    else:
+            print("Invalid entry!")
+    return new_status
+
 # Declaring function
 def start_chat(spy_name,spy_age,spy_rating):
+    # Initializing current status message with None
+    current_status_message = None
     # Initializing show_menu variable with true value
     show_menu = True
     while show_menu:
         # Displaying options to select different features of application
         menu_choice = input("\nWhat do you want to do? \n 1. Add a status update\n 0. Exit\n")
-        if (menu_choice == 1):
-            status = raw_input("Your status please: ")
-            print status
+        if menu_choice == 1:
+            updated_status_message = add_status(current_status_message)  # add_status function is called with current status message as parameter
+            print "Your status has been set to: " + updated_status_message
         elif menu_choice == 0:
             show_menu = False
         else:
