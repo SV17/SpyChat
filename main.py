@@ -66,7 +66,7 @@ def add_friend():
         'rating': 0.0
     }
     new_friend['name'] = raw_input("What is the name of friend? ")
-    new_friend['salutation'] = raw_input("What should we call you?(Mr. or Ms.) ")
+    new_friend['salutation'] = raw_input("What should we call you(Mr. or Ms.)?  ")
     new_friend['name'] = new_friend['salutation'] + " " + new_friend['name']
     new_friend['age'] = input("Age of friend: ")
     new_friend['rating'] = input("Rating of friend: ")
@@ -101,7 +101,7 @@ def start_chat(spy_name,spy_age,spy_rating):
                     print "You didn't select the status correctly!"
                 else:
                     # Prints the value returned from add_status function
-                    print "Your status has been set to: " + updated_status_message
+                    print "Your status has been set to: " + current_status_message
             else:
                 print "You didn't select the status correctly!"
         elif menu_choice == 2:
@@ -143,7 +143,7 @@ elif spy_exist.upper() == 'N':
     if len(spy['name'])>=2:
         print "Welcome " +spy['name']+ ", Glad to meet you!"
         # Asking for salutation
-        spy['salutation'] = raw_input("What should we call you (Mr. or Ms.)? " )
+        spy['salutation'] = raw_input("What should we call you(Mr. or Ms.)? " )
 
         # Validating salutation
         if len(spy['salutation'])>0:
