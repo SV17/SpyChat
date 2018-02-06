@@ -1,4 +1,7 @@
-# Values of existing user
-spy_name = "Ms. Shikha Verma"
-spy_age = 22
-spy_rating = 5.5
+# Values of existing user stored using "Dictionary" data type
+spy = {
+  'name': 'Ms. Shikha Verma',
+  'age': 24,
+  'rating': 4.7,
+  'is_online': True
+}
