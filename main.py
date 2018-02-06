@@ -79,7 +79,7 @@ def add_friend():
 def select_a_friend():
     serial_number = 1
     for friend in friends:
-        print str(serial_number) + "." + frnd['name']
+        print str(serial_number) + ". " + friend['name']
         serial_number = serial_number + 1
     user_selected_friend = input("\nSelect your friend: ")
     user_index = friends[user_selected_friend - 1]
