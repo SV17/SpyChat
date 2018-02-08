@@ -112,11 +112,11 @@ def send_message():
 
 
 def read_message():
-    friend_choice = select_a_friend()
+    sender = select_a_friend()
     output_path = raw_input("What is the name of the file? ")
     secret_text = Steganography.decode(output_path)
     new_chat = {
-        'message': text,
+        'message': secret_text,
         'time': datetime.now(),
         'sent_by_me': False
     }
