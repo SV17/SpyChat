@@ -4,6 +4,8 @@ from spy_details import spy
 # Importing steganography library for encoding and decoding
 from steganography.steganography import Steganography
 
+# Importing datetime library
+from datetime import datetime
 
 # Start greeting
 print ("Hello!!!")
@@ -14,7 +16,7 @@ print ("Let\'s get started...\n")
 # List used for storing old status messages
 STATUS_MESSAGES = ['I\'m busy', 'Available', 'Loving Life!', 'Sleeping']
 
-friends = []
+friends = [{'name': 'Himanshu','salutation': 'Mr.','age': 22,'rating': 9.0, 'chats' : []},{'name': 'Shruti','salutation': 'Ms.','age': 23,'rating': 7.7,'chats' : []}]
 
 # Declaring function for adding status
 def add_status(current_status_message):
@@ -69,7 +71,8 @@ def add_friend():
         'name': '',
         'salutation': '',
         'age': 0,
-        'rating': 0.0
+        'rating': 0.0,
+        'chats' : []
     }
     new_friend['name'] = raw_input("What is the name of friend? ")
     new_friend['salutation'] = raw_input("What should we call you(Mr. or Ms.)?  ")
@@ -98,12 +101,28 @@ def send_message():
     text = raw_input("What is your secret message? ")
     output_path = "output.jpg"
     Steganography.encode(original_image,output_path,text)
+    new_chat = {
+        'message' : text,
+        'time' : datetime.now(),
+        'sent_by_me' : True
+    }
+    # Saving chat
+    friends[friend_choice]['chats'].append(new_chat)
+    print "Your secret message is ready!"
+
 
 def read_message():
     friend_choice = select_a_friend()
     output_path = raw_input("What is the name of the file? ")
     secret_text = Steganography.decode(output_path)
-    print "Decoded message: " + secret_text
+    new_chat = {
+        'message': text,
+        'time': datetime.now(),
+        'sent_by_me': False
+    }
+    # Saving chat
+    friends[sender]['chats'].append(new_chat)
+    print "Your secret message is: " + secret_text
 
 # Declaring function
 def start_chat(spy_name,spy_age,spy_rating):
