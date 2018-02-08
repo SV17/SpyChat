@@ -1,5 +1,9 @@
-# importing spy_details
+# Importing spy_details
 from spy_details import spy
+
+# Importing steganography library for encoding and decoding
+from steganography.steganography import Steganography
+
 
 # Start greeting
 print ("Hello!!!")
@@ -58,7 +62,9 @@ def add_status(current_status_message):
         return set_status
     # Returning the value of new status to function
 
+# Declaring function for adding friend
 def add_friend():
+    # Using Dictionary type variable
     new_friend = {
         'name': '',
         'salutation': '',
@@ -76,14 +82,28 @@ def add_friend():
         print "\nFriend cannot be added! "
     return len(friends)
 
+# Declaring function for selecting the friend to whom message will be sent
 def select_a_friend():
     serial_number = 1
     for friend in friends:
         print str(serial_number) + ". " + friend['name']
         serial_number = serial_number + 1
     user_selected_friend = input("\nSelect your friend: ")
-    user_index = friends[user_selected_friend - 1]
+    user_index = user_selected_friend - 1
     return user_index
+
+def send_message():
+    friend_choice = select_a_friend()
+    original_image = raw_input("\nWhat is the name of your image? ")
+    text = raw_input("What is your secret message? ")
+    output_path = "output.jpg"
+    Steganography.encode(original_image,output_path,text)
+
+def read_message():
+    friend_choice = select_a_friend()
+    output_path = raw_input("What is the name of the file? ")
+    secret_text = Steganography.decode(output_path)
+    print "Decoded message: " + secret_text
 
 # Declaring function
 def start_chat(spy_name,spy_age,spy_rating):
@@ -93,10 +113,12 @@ def start_chat(spy_name,spy_age,spy_rating):
     show_menu = True
     while show_menu:
         # Displaying options to select different features of application
-        menu_choice = input("\nWhat do you want to do? \n 1. Add a status update\n 2. Add a new friend\n 3. Send a message\n 0. Exit\n")
+        menu_choice = input("\nWhat do you want to do? \n 1. Add a status update\n 2. Add a friend\n 3. Send a secret message\n 4. Read a secret message\n 0. Exit\n")
         if menu_choice == 1:
             current_status_message = add_status(current_status_message)  # add_status function is called with current status message as parameter
+            # Checking whether some status is there or not
             if len(current_status_message)>= 1:
+                # If user doesn't select anything
                 if current_status_message == 'No status':
                     print "You didn't select the status correctly!"
                 else:
@@ -108,8 +130,9 @@ def start_chat(spy_name,spy_age,spy_rating):
             number_of_friends = add_friend()
             print "You have " + str(number_of_friends) + " friend/friends."
         elif menu_choice == 3:
-            user_friend = select_a_friend()
-
+            send_message()
+        elif menu_choice == 4:
+            read_message()
         # For exitting from menu
         elif menu_choice == 0:
             show_menu = False
