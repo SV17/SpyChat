@@ -21,7 +21,7 @@ friend_one = Spy('Mr. Himanshu Dohan', 22, 7)
 friend_two = Spy('Ms. Shruti Sharma', 23, 5.2)
 friend_three = Spy('Ms. Ritu Saxena ', 25, 6.9)
 
-# List for storing friends
+# List for storing friends of spy
 friends = [friend_one, friend_two, friend_three]
 
 # Using ChatMessage class to store messages

@@ -1,6 +1,7 @@
 # Importing spy_details
 from spy_details import spy
 
+# Importing classes( Spy, ChatMessage) and friends list from spy_details
 from spy_details import Spy, ChatMessage, friends
 
 # Importing steganography library for encoding and decoding
@@ -30,11 +31,14 @@ def add_status(current_status_message):
 
     # Asking whether we want to select any old status or not
     status = raw_input("\nDo you want to select from old statuses? (Y/N) : ")
-    if len(status)>= 1:
+    # Checking whether user has entered anything or not
+    if len(status)>= 1:                     # len() function returns the length
         if status.upper() == 'Y':
+            # Initializing serial_number variable with 1
             serial_number = 1
             # Displaying old statuses from list
             for old_status in STATUS_MESSAGES:
+                # Concatenating serial number with old status
                 print str(serial_number) + ". " + old_status
                 # Incrementing serial number each time to display all statuses
                 serial_number = serial_number + 1
@@ -45,6 +49,7 @@ def add_status(current_status_message):
                 new_status = STATUS_MESSAGES[user_selection - 1]
             else:
                 print("Invalid selection!")
+            # Returning the status
             return new_status
 
         elif status.upper() == 'N':
@@ -56,14 +61,15 @@ def add_status(current_status_message):
             else:
                 # When user doesn't enter anything
                 print("Please enter something atleast...")
+            # Returning the new status entered by the user
             return new_status
         else:
             print("Invalid entry!")
 
     else:
+        # When user presses enter without choosing anything
         set_status = 'No status'
         return set_status
-    # Returning the value of new status to function
 
 # Declaring function for adding friend
 def add_friend():
@@ -93,8 +99,10 @@ def select_a_friend():
         # Concatenating serial number and name
         print str(serial_number) + ". " + friend.name
         serial_number = serial_number + 1
+    # Asking user to select one of the friends
     user_selected_friend = input("\nSelect your friend: ")
     user_index = user_selected_friend - 1
+    # Returns the index of user
     return user_index
 
 # Declaring function for sending message
@@ -123,7 +131,7 @@ def read_message():
     # Using decode() funtion with file name of encrypted message as parameter
     secret_text = Steganography.decode(output_path)
     print "Your secret message is: " + secret_text
-    # Add the chat to sender
+    # Adding the chat to sender
     new_chat = ChatMessage(secret_text,False)
     friends[sender].chats.append(new_chat)
 
@@ -152,14 +160,15 @@ def start_chat(spy_name,spy_age,spy_rating):
             number_of_friends = add_friend()    # Calling the add_friend() function for adding friend
             print "You have " + str(number_of_friends) + " friend/friends."
         elif menu_choice == 3:
-            send_message()   # Calling the send_message() function for sending the secret message
+            send_message()              # Calling the send_message() function for sending the secret message
         elif menu_choice == 4:
-            read_message()   # Calling the read_message() function for reading the secret message
+            read_message()              # Calling the read_message() function for reading the secret message
         elif menu_choice == 5:
             print ("Saving chats")      #Module not created (Classes not held yet)
-        elif menu_choice == 0:   # For exitting from menu
+        elif menu_choice == 0:          # For exitting from menu
             show_menu = False
         else:
+            # If user choose other than menu choices
             print("Invalid choice!!!")
 
 
@@ -198,7 +207,7 @@ elif spy_exist.upper() == 'N':
                 print ("Your age is fine to become a spy!\n ")
                 # Asking for rating
                 spy.rating = input("Enter your rating: ")
-                # Conditions for displaying comments according to the spy['rating']
+                # Conditions for displaying comments according to the spy rating
                 if spy.rating>4.5:
                     print("Great ace!\n")
                 elif spy.rating >3.5 and spy.rating <= 4.5:
