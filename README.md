@@ -1,5 +1,5 @@
 # SpyChat
-A terminal chat app using python that allows user to send and receive secret messages hidden safely inside an image.(Steganography)
+A terminal chat app using python that allows user to send and receive secret messages hidden safely inside an image. The encryption/ decryption used steganography library.
 
 # Objectives:
 • Profile of a spy
@@ -10,9 +10,13 @@ A terminal chat app using python that allows user to send and receive secret mes
 
 • Add a spy friend
 
-• Send and read a secret message
+• Send a secret message
+
+• Read a secret message
 
 • Save chats
+
+• Close application
 
 
 
