@@ -1,7 +1,7 @@
 # Importing spy_details
 from spy_details import spy
 
-# Importing classes( Spy, ChatMessage) and friends list from spy_details
+# Importing classes(Spy, ChatMessage) and list(friends) from spy_details
 from spy_details import Spy, ChatMessage, friends
 
 # Importing steganography library for encoding and decoding
@@ -17,27 +17,24 @@ print ("Let\'s get started...\n")
 # List used for storing old status messages
 STATUS_MESSAGES = ['I\'m busy', 'Available', 'Loving Life!', 'Sleeping',"Diamonds are forever", "SAD!"]
 
-#friends = [{'name': 'Himanshu','salutation': 'Mr.','age': 22,'rating': 9.0, 'chats' : []},{'name': 'Shruti','salutation': 'Ms.','age': 23,'rating': 7.7,'chats' : []}]
-
-
 # Declaring function for adding status
 def add_status(current_status_message):
-    # Checking whether any old status exists
+    # Checking whether any old status is set
     if current_status_message != None:
         print "Your current status message is: " + current_status_message     # Displays current status message
     else:
-        # When no old status exists
+        # When no old status is set
         print"\nYou don't have any status currently!"
 
     # Asking whether we want to select any old status or not
     status = raw_input("\nDo you want to select from old statuses? (Y/N) : ")
     # Checking whether user has entered anything or not
     if len(status)>= 1:                     # len() function returns the length
-        if status.upper() == 'Y':
+        if status.upper() == 'Y':           # upper() function converts from any case to upper case
             # Initializing serial_number variable with 1
             serial_number = 1
             # Displaying old statuses from list
-            for old_status in STATUS_MESSAGES:
+            for old_status in STATUS_MESSAGES:                 # old_status is a local variable of "for" loop
                 # Concatenating serial number with old status
                 print str(serial_number) + ". " + old_status
                 # Incrementing serial number each time to display all statuses
@@ -48,13 +45,14 @@ def add_status(current_status_message):
             if len(STATUS_MESSAGES)>=user_selection:
                 new_status = STATUS_MESSAGES[user_selection - 1]
             else:
+                # If user selects a value greater than the length of status messages
                 print("Invalid selection!")
             # Returning the status
             return new_status
 
         elif status.upper() == 'N':
             new_status = raw_input("Enter your new status: ")
-            # Checking whether user has entered anything or not
+            # Checking whether user has entered something or not
             if len(new_status) > 1:
                 # Appending the new status to the list
                 STATUS_MESSAGES.append(new_status)
@@ -95,14 +93,14 @@ def add_friend():
 def select_a_friend():
     serial_number = 1
     # Using loop
-    for friend in friends:
+    for friend in friends:                                    # friend is a local variable of "for" loop
         # Concatenating serial number and name
         print str(serial_number) + ". " + friend.name
         serial_number = serial_number + 1
     # Asking user to select one of the friends
     user_selected_friend = input("\nSelect your friend: ")
     user_index = user_selected_friend - 1
-    # Returns the index of user
+    # Returning the index of selected friend
     return user_index
 
 # Declaring function for sending message
@@ -126,16 +124,16 @@ def send_message():
 def read_message():
     # Selecting the friend
     sender = select_a_friend()
-    # Asking the name of file where encrypted message is stored
+    # Asking the name of image from where secret message is to be decoded
     output_path = raw_input("What is the name of the file? ")
     # Using decode() funtion with file name of encrypted message as parameter
     secret_text = Steganography.decode(output_path)
     print "Your secret message is: " + secret_text
     # Adding the chat to sender
     new_chat = ChatMessage(secret_text,False)
-    friends[sender].chats.append(new_chat)
+    friends[sender].chats.append(new_chat)      # Appending the message to existing list of messages
 
-# Declaring function
+# Declaring function for starting chat
 def start_chat(spy_name,spy_age,spy_rating):
     # Initializing current status message with None
     current_status_message = None
@@ -143,7 +141,7 @@ def start_chat(spy_name,spy_age,spy_rating):
     show_menu = True
     while show_menu:
         # Displaying options to select different features of application
-        menu_choice = input("\nWhat do you want to do? \n 1. Add a status update\n 2. Add a friend\n 3. Send a secret message\n 4. Read a secret message\n 5. Save chats\n 0. Close application\n")
+        menu_choice = input("\nWhat do you want to do? \n 1. Add a status update\n 2. Add a friend\n 3. Send a secret message\n 4. Read a secret message\n 5. Read chats from a user\n 0. Close application\n")
         if menu_choice == 1:
             current_status_message = add_status(current_status_message)  # add_status function is called with current status message as parameter
             # Checking whether some status is there or not
@@ -158,17 +156,17 @@ def start_chat(spy_name,spy_age,spy_rating):
                 print "You didn't select the status correctly!"
         elif menu_choice == 2:
             number_of_friends = add_friend()    # Calling the add_friend() function for adding friend
-            print "You have " + str(number_of_friends) + " friend/friends."
+            print "You have " + str(number_of_friends) + " friend/friends."     # Displaying the number of friend/friends
         elif menu_choice == 3:
             send_message()              # Calling the send_message() function for sending the secret message
         elif menu_choice == 4:
             read_message()              # Calling the read_message() function for reading the secret message
         elif menu_choice == 5:
-            print ("Saving chats")      #Module not created (Classes not held yet)
+            print ("Reading chats...")     #Module not created (Classes not held yet)
         elif menu_choice == 0:          # For exitting from menu
             show_menu = False
         else:
-            # If user choose other than menu choices
+            # If user chooses something other than menu choices
             print("Invalid choice!!!")
 
 
@@ -222,7 +220,7 @@ elif spy_exist.upper() == 'N':
                 # Using placeholders(%s,%d,etc.)
                 print "Authentication complete! %s, Welcome to SPY COMMUNITY... \nAge: %d and Rating of: %.2f\nProud to have you onboard !" %(spy.name,spy.age,spy.rating)
 
-                # Calling function to start chat application
+                # Calling function to start chat application with spy name, spy age and spy rating as parameters
                 start_chat(spy.name, spy.age, spy.rating)
             else:
                 # Age not within the specified limits

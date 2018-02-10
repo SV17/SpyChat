@@ -1,7 +1,7 @@
 # Importing datetime library to show date and time of chat
 from datetime import datetime
 
-# Using Spy class to store values for Spy
+# Using Spy class to store values of Spy
 class Spy:
   # Using constructor
   def __init__(self, name, age, rating):
