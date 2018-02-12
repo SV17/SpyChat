@@ -19,7 +19,7 @@ spy = Spy('Ms. Shikha Verma',22,7.7)
 # Existing friends of spy
 friend_one = Spy('Mr. Himanshu Dohan', 22, 7)
 friend_two = Spy('Ms. Shruti Sharma', 23, 5.2)
-friend_three = Spy('Ms. Ritu Saxena ', 25, 6.9)
+friend_three = Spy('Ms. Ritu Saxena', 22, 6)
 
 # List for storing friends of spy
 friends = [friend_one, friend_two, friend_three]

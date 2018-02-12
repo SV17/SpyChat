@@ -7,12 +7,26 @@ from spy_details import Spy, ChatMessage, friends
 # Importing steganography library for encoding and decoding
 from steganography.steganography import Steganography
 
+# Importing datetime library to show date and time of chat
+from datetime import datetime
+
+# Importing csv file
+import csv
 
 # Start greeting
 print ("Hello!!!")
 print('******* << Welcome to SpyChat >> *******')
 # Using escape sequence
 print ("Let\'s get started...\n")
+
+# Defining  load friends function to load the friends when application starts
+def load_friends():
+    with open('friends.csv', 'rb') as friends_data:
+        reader = csv.reader(friends_data)
+
+        for row in reader:
+            spy = Spy(name = row[0], age = int(row[1]), rating = float(row[2]))
+            friends.append(spy)
 
 # List used for storing old status messages
 STATUS_MESSAGES = ['I\'m busy', 'Available', 'Loving Life!', 'Sleeping',"Diamonds are forever", "SAD!"]
@@ -83,11 +97,16 @@ def add_friend():
     if len(new_friend.name) >= 3 and 50>=new_friend.age>=12 and new_friend.rating>=spy.rating:
         # Appending new friend to list
         friends.append(new_friend)
+        print("Friend is added!")
+        with open('friends.csv', 'a') as friends_data:
+            writer = csv.writer(friends_data)
+            writer.writerow([new_friend.name, new_friend.age, new_friend.rating, new_friend.is_online])
     else:
         # If validation fails
         print "\nFriend cannot be added! "
     # Returning the number of friends
     return len(friends)
+
 
 # Declaring function for selecting the friend to whom message will be sent
 def select_a_friend():
@@ -116,6 +135,11 @@ def send_message():
     # Using encode() funtion from Steganography library to encrypt the message
     Steganography.encode(original_image,output_path,text)
     new_chat = ChatMessage(text,True)
+
+    with open('chats.csv', 'ab') as chats_data:
+        write = csv.writer(chats_data)
+        write.writerow([spy.name , friends[friend_choice].name , new_chat.message , new_chat.time , new_chat.sent_by_me])
+
     # The message will be appended in ChatMessage class
     friends[friend_choice].chats.append(new_chat)
     print "Your message encrypted successfully!"
@@ -175,6 +199,8 @@ spy_exist = raw_input("Are you an existing user?(Y or N) : ")
 
 # Validating input
 if spy_exist.upper() == 'Y':        # .upper() converts from any case to upper case
+
+    #load_friends()
 
     # Existing user
     print("We already have your details!")
