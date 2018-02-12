@@ -19,6 +19,9 @@ print(colored("******* << Welcome to SpyChat >> *******" , "magenta"))
 # Using escape sequence
 print ("Let\'s get started...\n")
 
+
+#=================================================================================================================================
+
 # Defining  load friends function to load the friends when application starts
 def load_friends():
     with open('friends.csv', 'rb') as friends_data:
@@ -28,8 +31,12 @@ def load_friends():
             spy = Spy(name = row[0], age = int(row[1]), rating = float(row[2]))
             friends.append(spy)
 
+#====================================================================================================================================
+
 # List used for storing old status messages
 STATUS_MESSAGES = ['I\'m busy', 'Available', 'Loving Life!', 'Sleeping',"Diamonds are forever", "SAD!"]
+
+#=====================================================================================================================================
 
 # Declaring function for adding status
 def add_status(current_status_message):
@@ -83,6 +90,8 @@ def add_status(current_status_message):
         set_status = 'No status'
         return set_status
 
+#=========================================================================================================================================
+
 # Declaring function for adding friend
 def add_friend():
     # Using Class
@@ -107,6 +116,8 @@ def add_friend():
     # Returning the number of friends
     return len(friends)
 
+#=========================================================================================================================================
+
 
 # Declaring function for selecting the friend to whom message will be sent
 def select_a_friend():
@@ -121,6 +132,8 @@ def select_a_friend():
     user_index = user_selected_friend - 1
     # Returning the index of selected friend
     return user_index
+
+#======================================================================================================================================
 
 # Declaring function for sending message
 def send_message():
@@ -144,19 +157,72 @@ def send_message():
     friends[friend_choice].chats.append(new_chat)
     print (colored("Your message encrypted successfully!","cyan"))
 
+#==============================================================================================================================
+
+def send_help_message():
+    # Selecting a friend
+    friend_choice = select_a_friend()
+    # The response
+    text = colored("Don't worry... I'm coming to save you!","magenta")
+    # Creating new chat
+    new_chat = ChatMessage(colored(text,"red"),True)
+    # Appending the chat
+    friends[friend_choice].chats.append(new_chat)
+
+#==============================================================================================================================
+
 # Declaring funtion for reading the secret message
 def read_message():
     # Selecting the friend
     sender = select_a_friend()
     # Asking the name of image from where secret message is to be decoded
-    output_path = raw_input(colored("What is the name of the file? ","blue"))
-    # Using decode() funtion with file name of encrypted message as parameter
-    secret_text = Steganography.decode(output_path)
-    print (colored("Your secret message is:","cyan"))
-    print (colored(secret_text,"blue"))
-    # Adding the chat to sender
-    new_chat = ChatMessage(secret_text,False)
-    friends[sender].chats.append(new_chat)      # Appending the message to existing list of messages
+    output_path = raw_input(colored("What is the name of the file you want to decode? ","blue"))
+
+    try:
+        # Using decode() funtion with file name of encrypted message as parameter
+        secret_text = Steganography.decode(output_path)
+        print (colored("Your secret message is:","cyan"))
+        print (colored(secret_text,"blue"))
+
+        # Converting secret_text to uppercase
+        new_text = (secret_text.upper()).split()
+
+        # Checking emergency templates for help
+        if "SOS" in new_text or "SAVE" in new_text or "ACCIDENT" in new_text or "HELP" in new_text or "RESCUE" in new_text:
+
+            # Emergency alert
+            print colored("!", 'grey', 'on_yellow'),
+            print colored("!", 'grey', 'on_yellow'),
+            print colored("!", 'grey', 'on_yellow')
+
+            print colored("The friend who sent this message needs your help!", "green")
+            print colored("Please help your friend by sending a helping message...\n", "green")
+            print colored("Select the friend to send a helping message.\n", "green")
+
+            # Calling send_help_message() function to send the help
+            send_help_message()
+
+            # Message sent successfully
+            print colored("You just sent a message to help your friend! ", "cyan")
+
+            # Creating new chat
+            new_chat = ChatMessage(secret_text, False)
+            # Appending to chats
+            friends[sender].chats.append(new_chat)
+
+        # If there is no emergency messages or call for help
+        else:
+            new_chat = ChatMessage(secret_text, False)
+            # Appending
+            friends[sender].chats.append(new_chat)
+            print colored("Your secret message has been saved.\n", 'cyan')
+
+    # No message found exception
+    except TypeError:
+        print colored("Nothing to decode from the image...\n Sorry! There is no secret message", 'red')
+
+
+#=================================================================================================================================
 
 
 def read_chat_history():
@@ -168,16 +234,20 @@ def read_chat_history():
         if chat.sent_by_me:
             print (colored(str(chat.time.strftime("%d %B %Y %A %H : %M")) + ",","blue")),
             # The message is printed in red
-            print (colored("You said: ","red")),
-            # Black is by default
+            print (colored("Message sent : ","red")),
+            # Default colour black for text
             print str(chat.message)
+
+        # Message sent by another spy
         else:
             # Date and time is printed in blue
             print (colored(str(chat.time.strftime("%d %B %Y %A %H : %M"))+ "," ,"blue")),
             # The message is printed in red
-            print (colored(str(friends[friend_choice].name) + " said: ","red")),
+            print (colored(str(friends[friend_choice].name) + " said : ", "red")),
             # Black is by default
             print str(chat.message)
+
+#====================================================================================================================================
 
 # Declaring function for starting chat
 def start_chat(spy_name,spy_age,spy_rating):
@@ -235,7 +305,7 @@ elif spy_exist.upper() == 'N':
 
     # Checking whether spy has entered any name or not
     if len(spy.name)>=2:
-        print (colored("Welcome " +spy.name + ", Glad to meet you!"),"red")
+        print (colored("Welcome " +spy.name + ", Glad to meet you!","red"))
         # Asking for salutation
         spy.salutation = raw_input(colored("What should we call you(Mr. or Ms.)? " ,"blue"))
 
