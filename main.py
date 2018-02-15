@@ -58,8 +58,6 @@ def load_chats():
 # List used for storing old status messages
 STATUS_MESSAGES = ['I\'m busy', 'Available', 'LOVING LIFE!', 'Sleeping',"Diamonds are forever", "Urgent Calls Only"]
 
-# List for special words
-SPECIAL_WORDS = ['SOS', 'SAVE ME','HELP ME','ALERT','RESCUE','ACCIDENT']
 #=====================================================================================================================================
 
 # Declaring function for adding status
@@ -212,7 +210,7 @@ def read_message():
         new_text = (secret_text.upper()).split()
 
         # Checking emergency templates for help
-        if new_text in SPECIAL_WORDS:
+        if 'SOS' in new_text or 'SAVE ME'in new_text or 'HELP ME' in new_text or 'ALERT' in new_text or 'RESCUE' in new_text or 'ACCIDENT' in new_text:
 
             # Emergency alert
             print colored("!", 'grey', 'on_yellow'),
