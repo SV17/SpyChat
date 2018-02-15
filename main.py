@@ -25,11 +25,33 @@ print ("Let\'s get started...\n")
 # Defining  load friends function to load the friends when application starts
 def load_friends():
     with open('friends.csv', 'rb') as friends_data:
-        reader = csv.reader(friends_data)
+        reader = list(csv.reader(friends_data))
 
-        for row in reader:
-            spy = Spy(name = row[0], age = int(row[1]), rating = float(row[2]))
+        for row in reader[1:]:
+            name = row[0]
+            age = row[1]
+            rating = row[2]
+            online = row[3]
+            spy = Spy(name, age, rating, online)
             friends.append(spy)
+
+
+
+#===================================================================================================================================
+
+# Defining  load friends function to load the friends when application starts
+def load_chats():
+    with open('chats.csv', 'rb') as chats_data:
+        reader = list(csv.reader(chats_data))
+
+        for row in reader[1:]:
+            sender = row[0]
+            message_sent_to = row[1]
+            text = row[2]
+            time = row[3]
+            sent_by_me = row[4]
+            #chats = ChatMessage(sender, message_sent_to, text, time, sent_by_me)
+            chats.append(new_chat)
 
 #====================================================================================================================================
 
@@ -95,7 +117,7 @@ def add_status(current_status_message):
 # Declaring function for adding friend
 def add_friend():
     # Using Class
-    new_friend = Spy("",0,0.0)
+    new_friend = Spy("",0,0.0, True)
     # Taking values for new friend
     new_friend.name = raw_input(colored("What is the name of friend? ","blue"))
     new_friend.salutation = raw_input(colored("What should we call you(Mr. or Ms.)?  ","blue"))
@@ -165,7 +187,7 @@ def send_help_message():
     # The response
     text = colored("Don't worry... I'm coming to save you!","magenta")
     # Creating new chat
-    new_chat = ChatMessage(colored(text,"red"),True)
+    new_chat = ChatMessage(colored(text,"red"),False)
     # Appending the chat
     friends[friend_choice].chats.append(new_chat)
 
@@ -234,7 +256,7 @@ def read_chat_history():
         if chat.sent_by_me:
             print (colored(str(chat.time.strftime("%d %B %Y %A %H : %M")) + ",","blue")),
             # The message is printed in red
-            print (colored("Message sent : ","red")),
+            print (colored("You : ","red")),
             # Default colour black for text
             print str(chat.message)
 
@@ -243,7 +265,7 @@ def read_chat_history():
             # Date and time is printed in blue
             print (colored(str(chat.time.strftime("%d %B %Y %A %H : %M"))+ "," ,"blue")),
             # The message is printed in red
-            print (colored(str(friends[friend_choice].name) + " said : ", "red")),
+            print (colored(str(friends[friend_choice].name) + " : ", "red")),
             # Black is by default
             print str(chat.message)
 
@@ -291,8 +313,6 @@ spy_exist = raw_input(colored("Are you an existing user?(Y or N) : ","blue"))
 
 # Validating input
 if spy_exist.upper() == 'Y':        # .upper() converts from any case to upper case
-
-    #load_friends()
 
     # Existing user
     print(colored("We already have your details!","cyan"))
