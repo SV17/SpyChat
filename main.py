@@ -50,14 +50,16 @@ def load_chats():
             text = row[2]
             time = row[3]
             sent_by_me = row[4]
-            #chats = ChatMessage(sender, message_sent_to, text, time, sent_by_me)
+            chats = ChatMessage([spy.name, friends[friend_choice].name, new_chat.message, new_chat.time, new_chat.sent_by_me])
             chats.append(new_chat)
 
 #====================================================================================================================================
 
 # List used for storing old status messages
-STATUS_MESSAGES = ['I\'m busy', 'Available', 'Loving Life!', 'Sleeping',"Diamonds are forever", "SAD!"]
+STATUS_MESSAGES = ['I\'m busy', 'Available', 'LOVING LIFE!', 'Sleeping',"Diamonds are forever", "Urgent Calls Only"]
 
+# List for special words
+SPECIAL_WORDS = ['SOS', 'SAVE ME','HELP ME','ALERT','RESCUE','ACCIDENT']
 #=====================================================================================================================================
 
 # Declaring function for adding status
@@ -210,7 +212,7 @@ def read_message():
         new_text = (secret_text.upper()).split()
 
         # Checking emergency templates for help
-        if "SOS" in new_text or "SAVE" in new_text or "ACCIDENT" in new_text or "HELP" in new_text or "RESCUE" in new_text:
+        if new_text in SPECIAL_WORDS:
 
             # Emergency alert
             print colored("!", 'grey', 'on_yellow'),
@@ -271,6 +273,15 @@ def read_chat_history():
 
 #====================================================================================================================================
 
+
+def remove_friend():
+    friend_choice = select_a_friend()
+    del friends[friend_choice]
+    print (colored("Friend has been removed !","red"))
+    return len(friends)
+
+#====================================================================================================================================
+
 # Declaring function for starting chat
 def start_chat(spy_name,spy_age,spy_rating):
     # Initializing current status message with None
@@ -279,7 +290,7 @@ def start_chat(spy_name,spy_age,spy_rating):
     show_menu = True
     while show_menu:
         # Displaying options to select different features of application
-        menu_choice = input(colored("\nWhat do you want to do? \n 1. Add a status update\n 2. Add a friend\n 3. Send a secret message\n 4. Read a secret message\n 5. Read chats from a user\n 0. Close application\n","magenta"))
+        menu_choice = input(colored("\nWhat do you want to do? \n 1. Add a status update\n 2. Add a friend\n 3. Send a secret message\n 4. Read a secret message\n 5. Read chats from a user\n 6. Remove a friend\n 0. Close application\n","magenta"))
         if menu_choice == 1:
             current_status_message = add_status(current_status_message)  # add_status function is called with current status message as parameter
             # Checking whether some status is there or not
@@ -289,7 +300,7 @@ def start_chat(spy_name,spy_age,spy_rating):
                     print(colored("You didn't select the status correctly!","red"))
                 else:
                     # Prints the value returned from add_status function
-                    print(colored( "Your status has been set to: " + current_status_message , "green"))
+                    print(colored( "Your status has been set to: " + current_status_message , "blue"))
             else:
                 print (colored("You didn't select the status correctly!","red"))
         elif menu_choice == 2:
@@ -301,6 +312,9 @@ def start_chat(spy_name,spy_age,spy_rating):
             read_message()              # Calling the read_message() function for reading the secret message
         elif menu_choice == 5:
             read_chat_history()                # Calling the read_chat_history() function for reading the chats
+        elif menu_choice == 6:
+            number_of_friends = remove_friend()
+            print (colored("You have " + str(number_of_friends) + " friend/friends.","green"))  # Displaying the number of friend/friends
         elif menu_choice == 0:          # For exitting from menu
             show_menu = False
         else:
@@ -314,18 +328,25 @@ spy_exist = raw_input(colored("Are you an existing user?(Y or N) : ","blue"))
 # Validating input
 if spy_exist.upper() == 'Y':        # .upper() converts from any case to upper case
 
+    #load_friends()
+    #load_chats()
+
     # Existing user
     print(colored("We already have your details!","cyan"))
 
     # Calling function to start chat application
     start_chat(spy.name, spy.age, spy.rating)
 elif spy_exist.upper() == 'N':
+
+    #load_friends()
+    #load_chats()
+
     # New user
     spy.name = raw_input(colored("\nWhat is your spy name? ","blue"))
 
     # Checking whether spy has entered any name or not
     if len(spy.name)>=2:
-        print (colored("Welcome " +spy.name + ", Glad to meet you!","red"))
+        print "Welcome %s, Glad to meet you!" %(colored(spy.name,"red"))
         # Asking for salutation
         spy.salutation = raw_input(colored("What should we call you(Mr. or Ms.)? " ,"blue"))
 
@@ -334,7 +355,7 @@ elif spy_exist.upper() == 'N':
 
             # Concatenating salutation and name of spy
             spy.name = spy.salutation + " " + spy.name
-            print (colored("Alright " + spy.name + ". I'd like to know a little bit more about you..." , "red"))
+            print "Alright %s. I'd like to know a little bit more about you..." %(colored(spy.name,"red"))
             # Asking for age
             spy.age = input(colored("Enter your age: ","blue"))
             # Age cannot be less than 12 and greater than 50
@@ -356,8 +377,8 @@ elif spy_exist.upper() == 'N':
                 # Default Value
                 spy_is_online = True
                 # Using placeholders(%s,%d,etc.)
-                print "Authentication complete! %s, Welcome to SPY COMMUNITY... \nAge: %d and Rating of: %.2f\nProud to have you onboard !" %(spy.name,spy.age,spy.rating)
-
+                print "Authentication complete! %s, Welcome to SPY COMMUNITY... \nAge: %d and Rating of: %.2f" %(colored(spy.name,"red"),spy.age,spy.rating)
+                print colored("Proud to have you onboard !","cyan")
                 # Calling function to start chat application with spy name, spy age and spy rating as parameters
                 start_chat(spy.name, spy.age, spy.rating)
             else:

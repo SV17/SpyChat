@@ -6,8 +6,6 @@
       <change beforePath="$PROJECT_DIR$/chats.csv" afterPath="$PROJECT_DIR$/chats.csv" />
       <change beforePath="$PROJECT_DIR$/friends.csv" afterPath="$PROJECT_DIR$/friends.csv" />
       <change beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change beforePath="$PROJECT_DIR$/output.jpg" afterPath="$PROJECT_DIR$/output.jpg" />
-      <change beforePath="$PROJECT_DIR$/spy_details.py" afterPath="$PROJECT_DIR$/spy_details.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +19,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5168">
-              <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+            <state relative-caret-position="133">
+              <caret line="345" column="0" lean-forward="true" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
               <folding>
                 <element signature="e#24#51#0" expanded="true" />
               </folding>
@@ -33,8 +31,8 @@
       <file leaf-file-name="spy_details.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spy_details.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="34" column="8" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
+            <state relative-caret-position="119">
+              <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -54,7 +52,7 @@
         <entry file="file://$PROJECT_DIR$/chats.csv">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="56" />
+              <caret line="0" column="34" lean-forward="false" selection-start-line="0" selection-start-column="34" selection-end-line="0" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -75,9 +73,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/friends.csv" />
         <option value="$PROJECT_DIR$/chats.csv" />
         <option value="$PROJECT_DIR$/spy_details.py" />
-        <option value="$PROJECT_DIR$/friends.csv" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -628,14 +626,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ok.csv" />
-    <entry file="file://$PROJECT_DIR$/chats.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/friends.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -644,18 +634,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/chats.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="34" lean-forward="false" selection-start-line="0" selection-start-column="34" selection-end-line="0" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/spy_details.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="34" column="8" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
+        <state relative-caret-position="119">
+          <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5168">
-          <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+        <state relative-caret-position="133">
+          <caret line="345" column="0" lean-forward="true" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
           <folding>
             <element signature="e#24#51#0" expanded="true" />
           </folding>

@@ -1,4 +1,4 @@
-sender , message_sent_to , text   , time    , sent_by_me
+sender , message_sent_to , message  , time    , sent_by_me
 Ms. Shikha Verma,Mr. Himanshu Dohan,heyy,2018-02-12 20:38:04.681000,True
 Ms. Shikha Verma,Ms. Shruti Sharma,2929,2018-02-12 20:41:25.715000,True
 Ms. Shikha Verma,Mr. Himanshu Dohan,save me!,2018-02-15 17:17:59.409000,True
