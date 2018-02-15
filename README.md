@@ -24,6 +24,7 @@ A terminal chat app using python that allows user to send and receive secret mes
 Some additional libraries need to be installed beforehand. For installing libraries in python, commands are:
 
 pip install steganography
+
 pip install termcolor
 
 # Run:
