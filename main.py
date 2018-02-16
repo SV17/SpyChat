@@ -2,7 +2,7 @@
 from spy_details import spy
 
 # Importing classes(Spy, ChatMessage) and list(friends) from spy_details
-from spy_details import Spy, ChatMessage, friends
+from spy_details import Spy, ChatMessage, chats
 
 # Importing steganography library for encoding and decoding
 from steganography.steganography import Steganography
@@ -19,6 +19,10 @@ print(colored("******* << Welcome to SpyChat >> *******" , "magenta"))
 # Using escape sequence
 print ("Let\'s get started...\n")
 
+# List used for storing old status messages
+STATUS_MESSAGES = ['I\'m busy', 'Available', 'LOVING LIFE!', 'Sleeping',"Diamonds are forever", "Urgent Calls Only"]
+friends = []
+new_chat = []
 
 #=================================================================================================================================
 
@@ -28,14 +32,13 @@ def load_friends():
         reader = list(csv.reader(friends_data))
 
         for row in reader[1:]:
-            name = row[0]
-            age = row[1]
-            rating = row[2]
-            online = row[3]
-            spy = Spy(name, age, rating, online)
-            friends.append(spy)
-
-
+            if row:
+                name = row[0]
+                age = row[1]
+                rating = row[2]
+                online = row[3]
+                spy = Spy(name, age, rating, online)
+                friends.append(spy)
 
 #===================================================================================================================================
 
@@ -45,18 +48,19 @@ def load_chats():
         reader = list(csv.reader(chats_data))
 
         for row in reader[1:]:
-            sender = row[0]
-            message_sent_to = row[1]
-            text = row[2]
-            time = row[3]
-            sent_by_me = row[4]
-            chats = ChatMessage([spy.name, friends[friend_choice].name, new_chat.message, new_chat.time, new_chat.sent_by_me])
-            chats.append(new_chat)
+            if row:
+                sender = row[0]
+                message_sent_to = row[1]
+                text = row[2]
+                time = row[3]
+                sent_by_me = row[4]
+                #new_chat = ChatMessage(sender, message_sent_to, text, time,sent_by_me)
+                chats.append(new_chat)
 
 #====================================================================================================================================
 
-# List used for storing old status messages
-STATUS_MESSAGES = ['I\'m busy', 'Available', 'LOVING LIFE!', 'Sleeping',"Diamonds are forever", "Urgent Calls Only"]
+load_friends()
+#load_chats()
 
 #=====================================================================================================================================
 
