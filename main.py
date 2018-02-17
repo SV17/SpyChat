@@ -49,31 +49,6 @@ def load_friends():
 
 #===================================================================================================================================
 
-# Defining  load friends function to load the chats when application starts
-def load_chats(ch):
-    name_friend = friends[ch].name
-    # Changing name to red colour
-    red_friend = colored(name_friend,"red")
-    print "Chats with %s along with the date and time :\n " %red_friend
-    # Reading file
-    with open('chats.csv', 'rb') as chats_data:
-        reader = list(csv.reader(chats_data))
-        # Using a check for users who don't have any chats
-        check = False
-        for row in reader[1:]:
-            # Searching for name row by row
-            if row:
-                if (row[1] == name_friend):
-                    # If found, printing the chat message
-                    check = True
-                    print row[2]
-                    time = row[3]
-                    blue_time = colored(time, "blue")
-                    print blue_time
-
-
-        if check == False:
-             print (colored("\nYou have no chats with the selected friend!", "red", attrs=["dark", "bold"]))
 
 #=====================================================================================================================================
 
