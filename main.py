@@ -2,10 +2,13 @@
 from spy_details import spy
 
 # Importing classes(Spy, ChatMessage) and list(friends) from spy_details
-from spy_details import Spy, ChatMessage, chats
+from spy_details import Spy, ChatMessage
 
 # Importing steganography library for encoding and decoding
 from steganography.steganography import Steganography
+
+# Importing time to delay display output time
+import time
 
 # Importing csv file
 import csv
@@ -15,14 +18,18 @@ from termcolor import colored
 
 # Start greeting
 print ("Hello!!!")
-print(colored("******* << Welcome to SpyChat >> *******" , "magenta"))
+print(colored("******* << Welcome to SpyChat >> *******" , "magenta",attrs = ["dark","bold"]))
+
+time.sleep(2)
+
 # Using escape sequence
 print ("Let\'s get started...\n")
 
 # List used for storing old status messages
-STATUS_MESSAGES = ['I\'m busy', 'Available', 'LOVING LIFE!', 'Sleeping',"Diamonds are forever", "Urgent Calls Only"]
+STATUS_MESSAGES = ['I\'m busy', 'Available', 'LOVING LIFE!', 'Sleeping',"Diamonds are forever"]
 friends = []
 new_chat = []
+chats = []
 
 #=================================================================================================================================
 
@@ -42,25 +49,31 @@ def load_friends():
 
 #===================================================================================================================================
 
-# Defining  load friends function to load the friends when application starts
-def load_chats():
+# Defining  load friends function to load the chats when application starts
+def load_chats(ch):
+    name_friend = friends[ch].name
+    # Changing name to red colour
+    red_friend = colored(name_friend,"red")
+    print "Chats with %s along with the date and time :\n " %red_friend
+    # Reading file
     with open('chats.csv', 'rb') as chats_data:
         reader = list(csv.reader(chats_data))
-
+        # Using a check for users who don't have any chats
+        check = False
         for row in reader[1:]:
+            # Searching for name row by row
             if row:
-                sender = row[0]
-                message_sent_to = row[1]
-                text = row[2]
-                time = row[3]
-                sent_by_me = row[4]
-                #new_chat = ChatMessage(sender, message_sent_to, text, time,sent_by_me)
-                chats.append(new_chat)
+                if (row[1] == name_friend):
+                    # If found, printing the chat message
+                    check = True
+                    print row[2]
+                    time = row[3]
+                    blue_time = colored(time, "blue")
+                    print blue_time
 
-#====================================================================================================================================
 
-load_friends()
-#load_chats()
+        if check == False:
+             print (colored("\nYou have no chats with the selected friend!", "red", attrs=["dark", "bold"]))
 
 #=====================================================================================================================================
 
@@ -71,7 +84,7 @@ def add_status(current_status_message):
         print (colored("Your current status message is: " + current_status_message ,"cyan"))     # Displays current status message
     else:
         # When no old status is set
-        print (colored("\nYou don't have any status currently!","red"))
+        print (colored("\nYou don't have any status currently!","red",attrs = ["dark","bold"]))
 
     # Asking whether we want to select any old status or not
     status = raw_input(colored("\nDo you want to select from old statuses? (Y/N) : ","blue"))
@@ -93,7 +106,7 @@ def add_status(current_status_message):
                 new_status = STATUS_MESSAGES[user_selection - 1]
             else:
                 # If user selects a value greater than the length of status messages
-                print(colored("Invalid selection!","red"))
+                print(colored("Invalid selection!","red",attrs = ["dark","bold"]))
             # Returning the status
             return new_status
 
@@ -105,18 +118,46 @@ def add_status(current_status_message):
                 STATUS_MESSAGES.append(new_status)
             else:
                 # When user doesn't enter anything
-                print(colored("Please enter something atleast...","red"))
+                print(colored("Please enter something atleast...","red",attrs = ["dark","bold"]))
             # Returning the new status entered by the user
             return new_status
         else:
-            print(colored("Invalid entry!","red"))
+            print(colored("Invalid entry!","red",attrs = ["dark","bold"]))
 
     else:
         # When user presses enter without choosing anything
         set_status = 'No status'
         return set_status
 
-#=========================================================================================================================================
+#=====================================================================================================================================================================
+
+def remove_status():
+    n = -1
+    if len(STATUS_MESSAGES) != 0:
+        item_number = 0
+        for message in STATUS_MESSAGES:
+            print colored("%d.%s" %(item_number + 1, message), "green")
+            item_number = item_number + 1
+        answer = raw_input(colored("\nSelect a status to delete: ", "blue"))
+
+        try:
+            n = int(answer)
+            n= n - 1
+        except:
+            print colored("Wrong input !!!" , "red")
+
+        if n > -1 and n < len(STATUS_MESSAGES):
+            del STATUS_MESSAGES[n]
+            print colored("\nStatus message has been deleted", "cyan",attrs = ["dark","bold"])
+        else:
+            print colored("Wrong input !!!", "red")
+
+    else:
+        print colored("No status messages found!!!" , "red")
+
+
+#============================================================================================================================================================================
+
 
 # Declaring function for adding friend
 def add_friend():
@@ -132,13 +173,13 @@ def add_friend():
     if len(new_friend.name) >= 3 and 50>=new_friend.age>=12 and new_friend.rating>=spy.rating:
         # Appending new friend to list
         friends.append(new_friend)
-        print(colored("Friend is added!","magenta"))
+        print(colored("Friend is added!","magenta",attrs = ["dark","bold"]))
         with open('friends.csv', 'a') as friends_data:
             writer = csv.writer(friends_data)
             writer.writerow([new_friend.name, new_friend.age, new_friend.rating, new_friend.is_online])
     else:
         # If validation fails
-        print (colored("\nFriend cannot be added! ","red"))
+        print (colored("\nFriend cannot be added! ","red",attrs = ["dark","bold"]))
     # Returning the number of friends
     return len(friends)
 
@@ -173,7 +214,8 @@ def send_message():
     output_path = "output.jpg"
     # Using encode() funtion from Steganography library to encrypt the message
     Steganography.encode(original_image,output_path,text)
-    new_chat = ChatMessage(text,True)
+    sent_by_me = True
+    new_chat = ChatMessage(text,sent_by_me)
 
     with open('chats.csv', 'ab') as chats_data:
         write = csv.writer(chats_data)
@@ -181,9 +223,9 @@ def send_message():
 
     # The message will be appended in ChatMessage class
     friends[friend_choice].chats.append(new_chat)
-    print (colored("Your message encrypted successfully!","cyan"))
+    print (colored("Your message encrypted successfully!","cyan",attrs = ["dark","bold"]))
 
-#==============================================================================================================================
+#=============================================================================================================================================================
 
 def send_help_message():
     # Selecting a friend
@@ -195,7 +237,7 @@ def send_help_message():
     # Appending the chat
     friends[friend_choice].chats.append(new_chat)
 
-#==============================================================================================================================
+#==============================================================================================================================================================
 
 # Declaring funtion for reading the secret message
 def read_message():
@@ -214,22 +256,22 @@ def read_message():
         new_text = (secret_text.upper()).split()
 
         # Checking emergency templates for help
-        if 'SOS' in new_text or 'SAVE ME'in new_text or 'HELP ME' in new_text or 'ALERT' in new_text or 'RESCUE' in new_text or 'ACCIDENT' in new_text:
+        if 'SOS' in new_text or 'SAVE'in new_text or 'HELP' in new_text or 'ALERT' in new_text or 'RESCUE' in new_text or 'ACCIDENT' in new_text:
 
             # Emergency alert
             print colored("!", 'grey', 'on_yellow'),
             print colored("!", 'grey', 'on_yellow'),
             print colored("!", 'grey', 'on_yellow')
 
-            print colored("The friend who sent this message needs your help!", "green")
+            print colored("The friend who sent this message needs your help!", "green",attrs = ["dark","bold"])
             print colored("Please help your friend by sending a helping message...\n", "green")
-            print colored("Select the friend to send a helping message.\n", "green")
+            print colored("Select the friend to send a helping message.\n", "blue")
 
             # Calling send_help_message() function to send the help
             send_help_message()
 
             # Message sent successfully
-            print colored("You just sent a message to help your friend! ", "cyan")
+            print colored("You just sent a message to help your friend! ", "cyan",attrs = ["dark","bold"])
 
             # Creating new chat
             new_chat = ChatMessage(secret_text, False)
@@ -241,15 +283,16 @@ def read_message():
             new_chat = ChatMessage(secret_text, False)
             # Appending
             friends[sender].chats.append(new_chat)
-            print colored("Your secret message has been saved.\n", 'cyan')
+            print colored("Your secret message has been saved.\n", 'cyan',attrs = ["dark","bold"])
 
     # No message found exception
     except TypeError:
-        print colored("Nothing to decode from the image...\n Sorry! There is no secret message", 'red')
+        print colored("Nothing to decode from the image...\n Sorry! There is no secret message", 'red',attrs = ["dark","bold"])
 
 
 #=================================================================================================================================
 
+# For reading the chat history
 
 def read_chat_history():
     friend_choice = select_a_friend()
@@ -267,32 +310,65 @@ def read_chat_history():
         # Message sent by another spy
         else:
             # Date and time is printed in blue
-            print (colored(str(chat.time.strftime("%d %B %Y %A %H : %M"))+ "," ,"blue")),
+            print (colored(str(chat.time.strftime("%d %B %Y %A %H : %M"))+ "," ,"blue"))
             # The message is printed in red
             print (colored(str(friends[friend_choice].name) + " : ", "red")),
             # Black is by default
             print str(chat.message)
 
-#====================================================================================================================================
+#=============================================================================================================================================================
 
-
-def remove_friend():
-    friend_choice = select_a_friend()
-    del friends[friend_choice]
-    print (colored("Friend has been removed !","red"))
+# Function for removing a friend
+def remove_friend():                                         # Friend is removed from the current running application but changes aren't updated to friends.csv
+    # Asking the user which friend to delete
+    friend_choice = select_a_friend()                        # Hence, it is used to delete a friend from current running application only.
+    # del command is used for deleting a particular friend
+    del friends[friend_choice]                                # friend_choice specifies the friend to be deleted
+    # Displaying message
+    print (colored("Friend has been removed !","red",attrs = ["dark","bold"]))
+    # Displaying number of friends left after removal
     return len(friends)
 
-#====================================================================================================================================
+#=================================================================================================================================================================
 
+def display_friends():
+    if (len(friends) == 0):
+        print (colored("You have no friends !","red",attrs = ["dark","bold"]))
+        return 0
+
+    for friend in friends:
+        # Printing friend's details using attributes of object(friend) of class Spy
+        t = friend.name +  " of age " + friend.age + " with rating of " + friend.rating + " is online! "
+        green_t = colored(t,"blue")
+        print green_t                     # Printing in green colour
+        time.sleep(0.4)
+
+#===================================================================================================================================================================
+
+print(colored("\nLoading existing friends from file and displaying them...", "green",attrs = ["dark","bold"]))
+load_friends()                    # Loading friends as asked in extra objective
+time.sleep(0.6)
+display_friends()                 # Displaying friends
+
+time.sleep(1)
+print (colored("\nLet us now show you the previous chats..\nSelect a friend with whom you want to see the chats \n","green",attrs = ["dark","bold"]))
+ch = select_a_friend()
+load_chats(ch)                    # Loading chats from file and displaying them as asked in extra objective
+
+time.sleep(2)
+
+
+#==============================================================================================================================================================================
 # Declaring function for starting chat
 def start_chat(spy_name,spy_age,spy_rating):
+
     # Initializing current status message with None
     current_status_message = None
     # Initializing show_menu variable with true value
     show_menu = True
     while show_menu:
         # Displaying options to select different features of application
-        menu_choice = input(colored("\nWhat do you want to do? \n 1. Add a status update\n 2. Add a friend\n 3. Send a secret message\n 4. Read a secret message\n 5. Read chats from a user\n 6. Remove a friend\n 0. Close application\n","magenta"))
+        menu_choice = input(colored("\nWhat do you want to do? \n 1. Add a status update\n 2. Delete a status update\n 3. Add a friend\n 4. Send a secret message\n 5. Read a secret message\n 6. Read chats from a user\n 7. Remove a friend\n 0. Close application\n","magenta"))
         if menu_choice == 1:
             current_status_message = add_status(current_status_message)  # add_status function is called with current status message as parameter
             # Checking whether some status is there or not
@@ -306,15 +382,17 @@ def start_chat(spy_name,spy_age,spy_rating):
             else:
                 print (colored("You didn't select the status correctly!","red"))
         elif menu_choice == 2:
+            remove_status()
+        elif menu_choice == 3:
             number_of_friends = add_friend()    # Calling the add_friend() function for adding friend
             print (colored("You have " + str(number_of_friends) + " friend/friends." ,"green"))   # Displaying the number of friend/friends
-        elif menu_choice == 3:
-            send_message()              # Calling the send_message() function for sending the secret message
         elif menu_choice == 4:
-            read_message()              # Calling the read_message() function for reading the secret message
+            send_message()              # Calling the send_message() function for sending the secret message
         elif menu_choice == 5:
-            read_chat_history()                # Calling the read_chat_history() function for reading the chats
+            read_message()              # Calling the read_message() function for reading the secret message
         elif menu_choice == 6:
+            read_chat_history()                # Calling the read_chat_history() function for reading the chats
+        elif menu_choice == 7:
             number_of_friends = remove_friend()
             print (colored("You have " + str(number_of_friends) + " friend/friends.","green"))  # Displaying the number of friend/friends
         elif menu_choice == 0:          # For exitting from menu
@@ -325,23 +403,19 @@ def start_chat(spy_name,spy_age,spy_rating):
 
 
 # Asking the spy whether to continue with existing values or create a new user
-spy_exist = raw_input(colored("Are you an existing user?(Y or N) : ","blue"))
+spy_exist = raw_input(colored("\nAre you an existing user?(Y or N) : ","green"))
 
 # Validating input
 if spy_exist.upper() == 'Y':        # .upper() converts from any case to upper case
 
-    #load_friends()
-    #load_chats()
-
     # Existing user
-    print(colored("We already have your details!","cyan"))
+    print(colored("We already have your details!","cyan",attrs = ["dark","bold"]))
+
+    time.sleep(0.7)
 
     # Calling function to start chat application
     start_chat(spy.name, spy.age, spy.rating)
 elif spy_exist.upper() == 'N':
-
-    #load_friends()
-    #load_chats()
 
     # New user
     spy.name = raw_input(colored("\nWhat is your spy name? ","blue"))
@@ -381,14 +455,15 @@ elif spy_exist.upper() == 'N':
                 # Using placeholders(%s,%d,etc.)
                 print "Authentication complete! %s, Welcome to SPY COMMUNITY... \nAge: %d and Rating of: %.2f" %(colored(spy.name,"red"),spy.age,spy.rating)
                 print colored("Proud to have you onboard !","cyan")
+
                 # Calling function to start chat application with spy name, spy age and spy rating as parameters
                 start_chat(spy.name, spy.age, spy.rating)
             else:
                 # Age not within the specified limits
-                print(colored("Sorrry! Age inappropriate to become a spy... ","red"))
+                print(colored("Sorrry! Age inappropriate to become a spy... ","red",attrs = ["dark","bold"]))
         else:
             # Salutation not within the specified limits
-            print(colored("Invalid salutation!","red"))
+            print(colored("Invalid salutation!","red",attrs = ["dark","bold"]))
     else:
         # Name too small
-        print(colored("Invalid name! Enter a 2 letter name atleast ","red"))
+        print(colored("Invalid name! Enter a 2 letter name atleast ","red",attrs = ["dark","bold"]))

@@ -16,6 +16,8 @@ class Spy:
 # For existing user
 spy = Spy('Ms. Shikha Verma',22,7.7,True)
 
+
+
 # Using ChatMessage class to store messages
 class ChatMessage:
   # Using constructor
@@ -23,6 +25,3 @@ class ChatMessage:
     self.message = message
     self.time = datetime.now()  # now() function displays current date and time
     self.sent_by_me = sent_by_me
-
-
-chats = []
