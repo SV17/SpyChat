@@ -18,39 +18,69 @@ from termcolor import colored
 
 # Start greeting
 print ("Hello!!!")
-print(colored("******* << Welcome to SpyChat >> *******" , "magenta",attrs = ["dark","bold"]))
+print(colored("******* << Welcome to SpyChat >> *******" , "magenta",attrs = ["dark","bold"]))        # attrs = ["dark","bold"] displays dark and bold output
 
-time.sleep(2)
+time.sleep(2)                                       # sleep() function delays the display output time(in seconds)
 
 # Using escape sequence
 print ("Let\'s get started...\n")
 
 # List used for storing old status messages
 STATUS_MESSAGES = ['I\'m busy', 'Available', 'LOVING LIFE!', 'Sleeping',"Diamonds are forever"]
+# List for storing friends of spy
 friends = []
+# List for new chats
 new_chat = []
+# Lists for storing all chats
 chats = []
 
-#=================================================================================================================================
+#============================================================================================================================================================================
 
 # Defining  load friends function to load the friends when application starts
 def load_friends():
+    # Opening file as read binary
     with open('friends.csv', 'rb') as friends_data:
+        # Typecasting to list
         reader = list(csv.reader(friends_data))
-
-        for row in reader[1:]:
+        # Using for loop to go through the file
+        for row in reader[1:]:                         # Using slicing
             if row:
                 name = row[0]
                 age = row[1]
                 rating = row[2]
                 online = row[3]
                 spy = Spy(name, age, rating, online)
+                # Appending
                 friends.append(spy)
 
-#===================================================================================================================================
+#==============================================================================================================================================================================
 
+# Defining  load friends function to load the chats when application starts
+def load_chats(ch):
+    name_friend = friends[ch].name                 # ch is the friend whose chats are to be displayed
+    # Changing name to red colour
+    red_friend = colored(name_friend,"red")
+    print "Chats with %s are :\n " %red_friend
+    # Reading file in read binary mode
+    with open('chats.csv', 'rb') as chats_data:
+        reader = list(csv.reader(chats_data))
+        # Using a check for users who don't have any chats
+        check = False
+        for row in reader[1:]:
+            # Searching for name row by row
+            if row:
+                if (row[1] == name_friend):
+                    # If found, printing the chat message
+                    check = True
+                    print row[2]
+                    time = row[3]
+                    blue_time = colored(time, "blue")
 
-#=====================================================================================================================================
+        if check == False:
+            # If no chats exist
+             print (colored("You have no chats with the selected friend!", "red", attrs=["dark", "bold"]))
+
+#==============================================================================================================================================================================
 
 # Declaring function for adding status
 def add_status(current_status_message):
@@ -104,34 +134,42 @@ def add_status(current_status_message):
         set_status = 'No status'
         return set_status
 
-#=====================================================================================================================================================================
+#================================================================================================================================================================================
 
-def remove_status():
+# For removing a particular status
+def remove_status():                                                      
+    # Initializing a variable n with -1
     n = -1
-    if len(STATUS_MESSAGES) != 0:
+    # If some statuses are present in STATUS_MESSAGES list
+    if len(STATUS_MESSAGES) != 0:        # Checking the length of status messages(list)
         item_number = 0
         for message in STATUS_MESSAGES:
             print colored("%d.%s" %(item_number + 1, message), "green")
             item_number = item_number + 1
+        # Asking user to select one of the statuses which is to be deleted
         answer = raw_input(colored("\nSelect a status to delete: ", "blue"))
 
         try:
+            # Typecasting to int
             n = int(answer)
             n= n - 1
         except:
             print colored("Wrong input !!!" , "red")
 
-        if n > -1 and n < len(STATUS_MESSAGES):
+        if n > -1 and n < len(STATUS_MESSAGES):           # It should lie in the list
             del STATUS_MESSAGES[n]
+
+            # Deleting the particular status
             print colored("\nStatus message has been deleted", "cyan",attrs = ["dark","bold"])
         else:
-            print colored("Wrong input !!!", "red")
+            print colored("Wrong input !!!", "red",attrs = ["dark","bold"])
 
     else:
+        # If list is empty i.e there are no status messages
         print colored("No status messages found!!!" , "red")
 
 
-#============================================================================================================================================================================
+#============================================================================================================================================================================================
 
 
 # Declaring function for adding friend
@@ -212,7 +250,7 @@ def send_help_message():
     # Appending the chat
     friends[friend_choice].chats.append(new_chat)
 
-#==============================================================================================================================================================
+#===========================================================================================================================================================================
 
 # Declaring funtion for reading the secret message
 def read_message():
@@ -238,6 +276,7 @@ def read_message():
             print colored("!", 'grey', 'on_yellow'),
             print colored("!", 'grey', 'on_yellow')
 
+            # Emergency alert messages
             print colored("The friend who sent this message needs your help!", "green",attrs = ["dark","bold"])
             print colored("Please help your friend by sending a helping message...\n", "green")
             print colored("Select the friend to send a helping message.\n", "blue")
@@ -265,11 +304,11 @@ def read_message():
         print colored("Nothing to decode from the image...\n Sorry! There is no secret message", 'red',attrs = ["dark","bold"])
 
 
-#=================================================================================================================================
-
+#===========================================================================================================================================================================
 # For reading the chat history
 
 def read_chat_history():
+    # Selecting a friend whose chat history has to be displayed
     friend_choice = select_a_friend()
 
     print '\n'
@@ -285,13 +324,13 @@ def read_chat_history():
         # Message sent by another spy
         else:
             # Date and time is printed in blue
-            print (colored(str(chat.time.strftime("%d %B %Y %A %H : %M"))+ "," ,"blue"))
+            print (colored(str(chat.time.strftime("%d %B %Y %A %H : %M"))+ "," ,"blue")),
             # The message is printed in red
             print (colored(str(friends[friend_choice].name) + " : ", "red")),
             # Black is by default
             print str(chat.message)
 
-#=============================================================================================================================================================
+#===============================================================================================================================================================================
 
 # Function for removing a friend
 def remove_friend():                                         # Friend is removed from the current running application but changes aren't updated to friends.csv
@@ -304,8 +343,9 @@ def remove_friend():                                         # Friend is removed
     # Displaying number of friends left after removal
     return len(friends)
 
-#=================================================================================================================================================================
+#=============================================================================================================================================================================
 
+# Function for displaying existing friends when the application starts
 def display_friends():
     if (len(friends) == 0):
         print (colored("You have no friends !","red",attrs = ["dark","bold"]))
@@ -322,12 +362,12 @@ def display_friends():
 
 print(colored("\nLoading existing friends from file and displaying them...", "green",attrs = ["dark","bold"]))
 load_friends()                    # Loading friends as asked in extra objective
-time.sleep(0.6)
+time.sleep(0.6)                   # sleep() function delays the output time(in seconds)
 display_friends()                 # Displaying friends
 
 time.sleep(1)
 print (colored("\nLet us now show you the previous chats..\nSelect a friend with whom you want to see the chats \n","green",attrs = ["dark","bold"]))
-ch = select_a_friend()
+ch = select_a_friend()            # Selecting friend whose chats have to be displayed
 load_chats(ch)                    # Loading chats from file and displaying them as asked in extra objective
 
 time.sleep(2)

@@ -17,7 +17,6 @@ class Spy:
 spy = Spy('Ms. Shikha Verma',22,7.7,True)
 
 
-
 # Using ChatMessage class to store messages
 class ChatMessage:
   # Using constructor
