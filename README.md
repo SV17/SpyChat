@@ -6,9 +6,11 @@ A terminal chat app using python that allows user to send and receive secret mes
 
 • A menu of choices
 
-• Status message for a spy
+• Add a status update
 
-• Add a spy friend
+• Delete a status update
+
+• Add a friend
 
 • Send a secret message
 
